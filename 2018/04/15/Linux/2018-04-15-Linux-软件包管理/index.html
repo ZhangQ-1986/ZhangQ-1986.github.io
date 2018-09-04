@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="文件权限管理," />
+  <meta name="keywords" content="rpm,yum," />
 
 
 
@@ -79,24 +79,18 @@
 
 
 
-<meta name="description" content="文件管理权限  -   rwx        r-x       r-x        user1     user1   filename类型  拥有者权限   所属组权限  其他人权限   拥有者     属组     对象   文件权限内容解读  [-] [rwx][r-x][r-- ] 1   234  567  8901 为：代表这个文件名目录或 文件 ， (-)为文件；(d)为目录；2">
-<meta name="keywords" content="文件权限管理">
+<meta name="description" content="Linux-软件包管理  本博客中Linux系统是CentOS7。CentOS中软件安装有三种方式：  rpm软件包 yum指令 源码编译安装  特点：  rpm/yum：方便，软件版本低。稳定性好、管理方便。性能稍差。 源码手动：麻烦，软件版本新。稳定性稍差、管理稍差。性能好。  RPM 挂载光盘mount  /dev/cdrom /mnt/  查看包个数ls /mnt/Packages/ |">
+<meta name="keywords" content="rpm,yum">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Linux-文件权限管理">
-<meta property="og:url" content="http://www.zhangq.info/2018/04/09/Linux/2018-04-09-Linux文件权限管理/index.html">
+<meta property="og:title" content="Linux-软件包管理">
+<meta property="og:url" content="http://www.zhangq.info/2018/04/15/Linux/2018-04-15-Linux-软件包管理/index.html">
 <meta property="og:site_name" content="ZhangQ">
-<meta property="og:description" content="文件管理权限  -   rwx        r-x       r-x        user1     user1   filename类型  拥有者权限   所属组权限  其他人权限   拥有者     属组     对象   文件权限内容解读  [-] [rwx][r-x][r-- ] 1   234  567  8901 为：代表这个文件名目录或 文件 ， (-)为文件；(d)为目录；2">
+<meta property="og:description" content="Linux-软件包管理  本博客中Linux系统是CentOS7。CentOS中软件安装有三种方式：  rpm软件包 yum指令 源码编译安装  特点：  rpm/yum：方便，软件版本低。稳定性好、管理方便。性能稍差。 源码手动：麻烦，软件版本新。稳定性稍差、管理稍差。性能好。  RPM 挂载光盘mount  /dev/cdrom /mnt/  查看包个数ls /mnt/Packages/ |">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://www.zhangq.info/images/Linux/2018-04-09-01.png">
-<meta property="og:image" content="http://www.zhangq.info/images/Linux/2018-04-09-02.png">
-<meta property="og:image" content="http://www.zhangq.info/images/Linux/2018-04-09-03.png">
-<meta property="og:image" content="http://www.zhangq.info/images/Linux/2018-04-09-04.png">
-<meta property="og:image" content="http://www.zhangq.info/images/Linux/2018-04-09-05.png">
-<meta property="og:updated_time" content="2018-09-01T14:00:42.354Z">
+<meta property="og:updated_time" content="2018-09-04T06:37:38.179Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Linux-文件权限管理">
-<meta name="twitter:description" content="文件管理权限  -   rwx        r-x       r-x        user1     user1   filename类型  拥有者权限   所属组权限  其他人权限   拥有者     属组     对象   文件权限内容解读  [-] [rwx][r-x][r-- ] 1   234  567  8901 为：代表这个文件名目录或 文件 ， (-)为文件；(d)为目录；2">
-<meta name="twitter:image" content="http://www.zhangq.info/images/Linux/2018-04-09-01.png">
+<meta name="twitter:title" content="Linux-软件包管理">
+<meta name="twitter:description" content="Linux-软件包管理  本博客中Linux系统是CentOS7。CentOS中软件安装有三种方式：  rpm软件包 yum指令 源码编译安装  特点：  rpm/yum：方便，软件版本低。稳定性好、管理方便。性能稍差。 源码手动：麻烦，软件版本新。稳定性稍差、管理稍差。性能好。  RPM 挂载光盘mount  /dev/cdrom /mnt/  查看包个数ls /mnt/Packages/ |">
 
 
 
@@ -126,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://www.zhangq.info/2018/04/09/Linux/2018-04-09-Linux文件权限管理/"/>
+  <link rel="canonical" href="http://www.zhangq.info/2018/04/15/Linux/2018-04-15-Linux-软件包管理/"/>
 
 
 
 
 
-  <title>Linux-文件权限管理 | ZhangQ</title>
+  <title>Linux-软件包管理 | ZhangQ</title>
   
 
 
@@ -303,7 +297,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.zhangq.info/2018/04/09/Linux/2018-04-09-Linux文件权限管理/">
+    <link itemprop="mainEntityOfPage" href="http://www.zhangq.info/2018/04/15/Linux/2018-04-15-Linux-软件包管理/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="ZhangQ">
@@ -320,7 +314,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Linux-文件权限管理</h1>
+          <h1 class="post-title" itemprop="name headline">Linux-软件包管理</h1>
         
 
         <div class="post-meta">
@@ -332,8 +326,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-09T00:00:00+08:00">
-                2018-04-09
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-15T00:00:00+08:00">
+                2018-04-15
               </time>
             
 
@@ -392,45 +386,53 @@
       
 
       
-        <h1 id="文件管理权限"><a href="#文件管理权限" class="headerlink" title="文件管理权限"></a>文件管理权限</h1><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">  -   rwx        r-x       r-x        user1     user1   filename</span><br><span class="line">类型  拥有者权限   所属组权限  其他人权限   拥有者     属组     对象</span><br></pre></td></tr></table></figure>
-<p><img src="/images/Linux/2018-04-09-01.png" alt="文件权限图片"></p>
+        <center><h1>Linux-软件包管理</h1></center>
+
+<p>本博客中Linux系统是CentOS7。<br>CentOS中软件安装有三种方式：</p>
 <ul>
-<li>文件权限内容解读</li>
+<li>rpm软件包</li>
+<li>yum指令</li>
+<li>源码编译安装</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[-] [rwx][r-x][r-- ]</span><br><span class="line"> 1   234  567  890</span><br><span class="line">1 为：代表这个文件名目录或 文件 ， (-)为文件；(d)为目录；</span><br><span class="line">234为：拥有者的权限，(r)可读、(w)可写、(x)可执行  文件 </span><br><span class="line">                  (r)可读、(w)创建、(x)进入    目录</span><br><span class="line">567为：同群组用户权利</span><br><span class="line">890为：其他用户权利</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">对于目录: r读（看到目录里面有什么）       ls</span><br><span class="line">         w建文件、删除、移动            touch   mkdir    rm   mv  cp</span><br><span class="line">         x进入                        cd</span><br></pre></td></tr></table></figure>
-<h2 id="特殊权限"><a href="#特殊权限" class="headerlink" title="特殊权限"></a>特殊权限</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">        SUID    SGID  stickybit</span><br><span class="line">S对应值： 4s      2t       1</span><br></pre></td></tr></table></figure>
-<h3 id="SUID"><a href="#SUID" class="headerlink" title="SUID"></a>SUID</h3><p>限定：只能设置在二进制可行性程序上面，对目录文本设置无效。<br>功能：程序运行的权限从执行者变更成程序的所有者。</p>
-<p>  <img src="/images/Linux/2018-04-09-02.png" alt="SUID"></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[root@izuf6fmbh00axmyjllc0x0z ~]<span class="comment"># ll /usr/bin/passwd</span></span><br><span class="line">-rwsr-xr-x. 1 root root 27832 Jun 10  2014 /usr/bin/passwd</span><br><span class="line">[root@izuf6fmbh00axmyjllc0x0z ~]<span class="comment"># ll /usr/bin/less</span></span><br><span class="line">-rwxr-xr-x. 1 root root 158240 Jul 31  2015 /usr/bin/less</span><br><span class="line">[root@izuf6fmbh00axmyjllc0x0z ~]<span class="comment"># chmod u+s /usr/bin/less</span></span><br><span class="line">[root@izuf6fmbh00axmyjllc0x0z ~]<span class="comment"># ll /usr/bin/less</span></span><br><span class="line">-rwsr-xr-x. 1 root root 158240 Jul 31  2015 /usr/bin/less</span><br></pre></td></tr></table></figure>
-<h3 id="SGID"><a href="#SGID" class="headerlink" title="SGID"></a>SGID</h3><p>限定：既可以给二进制可执行程序设置，也可以给目录设置<br>功能：在设置了SGID权限的目录下建立文件时，新创建的文件的<code>所属组</code>会继承上级目录权限</p>
-<p><img src="/images/Linux/2018-04-09-03.png" alt="SUID"></p>
-<h3 id="Stickybit"><a href="#Stickybit" class="headerlink" title="Stickybit"></a>Stickybit</h3><p>限定：只作用于目录<br>功能：目录下创建的文件只有root、文件创建、目录所有者才能删除</p>
-<h2 id="chmod"><a href="#chmod" class="headerlink" title="chmod"></a>chmod</h2><p>功能：用于改变文件或目录的访问权限。<br>该命令有两种用法：一种是包含字母和操作符表达式的文字设定法，另一种是包含数字的数字设定法。</p>
-<h3 id="文字设定"><a href="#文字设定" class="headerlink" title="文字设定"></a>文字设定</h3><p>chmod [who] [+ | - | =] [mode] 文件名<br>chmod [who] [数值] 文件名</p>
-<p>命令中各选项的含义为：<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">1. 操作对象who 可以是下述字母中的任一个或者它们的组合：</span><br><span class="line">    u 表示用户(user) ，即文件或目录的所有者</span><br><span class="line">    g 表示同组(group)用户，即与文件属主有相同组ID 的所有用户</span><br><span class="line">    o 表示其他(others)用户</span><br><span class="line">    a 表示所有(all)用户，它是系统默认值。</span><br><span class="line">2. 操作符号可以是：</span><br><span class="line">    + 添加某个权限</span><br><span class="line">    - 取消某个权限</span><br><span class="line">    = 赋予给定权限,并取消其他所有权限</span><br><span class="line">3. mode 表示权限常用的参数有</span><br><span class="line">    r 可读</span><br><span class="line">    w 可写</span><br><span class="line">    x 可执行</span><br></pre></td></tr></table></figure></p>
-<p>例如：<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">1 、将文件 script 的权限设为可执行。命令如下：</span><br><span class="line">    chmod =rx text</span><br><span class="line">    执行成功后 ，用ls -l script 命令查看文件属性的结果如下：</span><br><span class="line">    -r-xr-xr-x 1 user group 0 Feb 10 09:42 script</span><br><span class="line">2 、将文件 text 的权限设为：文件属主可读、可写、可执行，与文件属主同组的用户可读，其他用户不可读。命令如下：</span><br><span class="line">   chmod u=rwx,g=r,o= text （注意,后无空格o=后有空格）</span><br><span class="line">   执行成功后 ，用ls –l text 命令查看文件属性的结果如下：</span><br><span class="line">   -rwxr—– 1 user group 0 Feb 10 09:42 text</span><br></pre></td></tr></table></figure></p>
-<p><img src="/images/Linux/2018-04-09-04.png" alt="SUID"></p>
-<h3 id="数字设定"><a href="#数字设定" class="headerlink" title="数字设定"></a>数字设定</h3><p>每种身份(owner/group/others)各自的三个权限(r/w/x)分数是需要累加的。<br>例如当权限为： [-rwxrwx—] 分数则是：</p>
+<p>特点：</p>
 <ul>
-<li>owner = rwx = 4+2+1 = 7</li>
-<li>group = rwx = 4+2+1 = 7</li>
-<li>others= — = 0+0+0 = 0</li>
+<li>rpm/yum：方便，软件版本低。稳定性好、管理方便。性能稍差。</li>
+<li>源码手动：麻烦，软件版本新。稳定性稍差、管理稍差。性能好。</li>
 </ul>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">chmod 777 text</span><br></pre></td></tr></table></figure>
-<h2 id="chown"><a href="#chown" class="headerlink" title="chown"></a>chown</h2><p>功能：用于更改某个文件或目录的属主和属组。<br>例如root 用户把自己的一个文件拷贝给用户oracle ，为了让用户oracle 能够存取这个文件，root 用户应该把这个文件的属主设为oracle ，否则用户oracle无法存取这个文件。<br>语法：chown [用户:组] 文件<br><img src="/images/Linux/2018-04-09-05.png" alt="SUID"></p>
-<h2 id="umask"><a href="#umask" class="headerlink" title="umask"></a>umask</h2><p>umask可用来设定[权限掩码]。[权限掩码]是由3个八进制的数字所组成。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[root@localhost ~]# umask</span><br><span class="line">0022</span><br></pre></td></tr></table></figure>
-<h3 id="权限计算"><a href="#权限计算" class="headerlink" title="权限计算"></a>权限计算</h3><p>将现有的存取权限减掉权限掩码后，即可产生建立文件时预设的权限。（有些时候会报错）<br>文件默认权限=666-umask<br>目录默认权限=777-umask</p>
-<p>正确的计算方式：<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">6    6   6                  umask   0   3   3    取反</span><br><span class="line">110 110 110                        000 011 011   取反</span><br><span class="line">                                   111 100 100</span><br><span class="line"></span><br><span class="line">110 110 110   与  111  100  100 异或</span><br><span class="line">110 100 100</span><br></pre></td></tr></table></figure></p>
-<h2 id="getfacl"><a href="#getfacl" class="headerlink" title="getfacl"></a>getfacl</h2><p>功能：取得某个文件/目录的ACL设置项目。<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># getfacl test</span></span><br><span class="line"><span class="comment"># file: test</span></span><br><span class="line"><span class="comment"># owner: root</span></span><br><span class="line"><span class="comment"># group: root</span></span><br><span class="line">user::rwx</span><br><span class="line">group::r-x</span><br><span class="line">other::r-x</span><br></pre></td></tr></table></figure></p>
-<h2 id="setfacl"><a href="#setfacl" class="headerlink" title="setfacl"></a>setfacl</h2><p>功能：设置某个文件/目录的ACL设置项目。<br>参数：<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">-m：设置后续acl参数 </span><br><span class="line">-x：删除后续acl参数  </span><br><span class="line">-b：删除全部的acl参数</span><br><span class="line">-k：删除默认的acl参数</span><br><span class="line">-R：递归设置acl，包括子目录</span><br><span class="line">-d：设置默认acl</span><br></pre></td></tr></table></figure></p>
-<p>具体实例：<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#创建一个文件</span></span><br><span class="line">[root@localhost ~]<span class="comment"># touch test</span></span><br><span class="line">[root@localhost ~]<span class="comment"># chmod 777 test</span></span><br><span class="line">[root@localhost ~]<span class="comment"># getfacl test             //获得文件的ACL权限</span></span><br><span class="line"><span class="comment"># file: test                                  //文件名</span></span><br><span class="line"><span class="comment"># owner: root                                 //文件所属者</span></span><br><span class="line"><span class="comment"># group: root                                 //文件所属组</span></span><br><span class="line">user::rwx                                     //文件所属者权限</span><br><span class="line">group::rwx                                    //同组用户权限</span><br><span class="line">other::rwx                                    //其它者权限</span><br><span class="line"></span><br><span class="line"><span class="comment">#修改其ACL策略，使用用户code只有读取的权限</span></span><br><span class="line">[root@localhost ~]<span class="comment"># setfacl -m u:code:r test</span></span><br><span class="line">[root@localhost ~]<span class="comment"># ll /test</span></span><br><span class="line">-rwxrwxrwx+ 1 root root 1 Apr 09 10:25 /<span class="built_in">test</span>  //可以看到权限的最后多了一个”+”号</span><br><span class="line"></span><br><span class="line"><span class="comment">#再次查看一下此文件的ACL属性</span></span><br><span class="line">[root@Slocalhost ~]<span class="comment"># getfacl test</span></span><br><span class="line"><span class="comment"># file: test</span></span><br><span class="line"><span class="comment"># owner: root</span></span><br><span class="line"><span class="comment"># group: root</span></span><br><span class="line">user::rwx</span><br><span class="line">user:code:r--                                 //可以看到code单独的权限为r--</span><br><span class="line">group::rwx</span><br><span class="line">mask::rwx</span><br><span class="line">other::rwx</span><br><span class="line"></span><br><span class="line"><span class="comment">#设置有效权限为只写</span></span><br><span class="line">[root@localhost ~]<span class="comment"># setfacl -m m:w test              </span></span><br><span class="line">[root@localhost ~]<span class="comment"># getfacl test</span></span><br><span class="line"><span class="comment"># file: test</span></span><br><span class="line"><span class="comment"># owner: root</span></span><br><span class="line"><span class="comment"># group: root</span></span><br><span class="line">user::rwx</span><br><span class="line">user:code:r--	</span><br><span class="line">group::rwx	</span><br><span class="line">mask::-w-                                      //可以看到有效权限已经修改成功</span><br><span class="line">other::rwx</span><br><span class="line"></span><br><span class="line"><span class="comment">#测试权限</span></span><br><span class="line">[root@localhost ~]<span class="comment"># echo "this is a test getfacl " &gt;/test</span></span><br><span class="line">[code@localhost ~]$ vim /<span class="built_in">test</span> </span><br><span class="line"> <span class="string">"/test"</span> [Permission Denied]                    //设置权限后不能写入数据</span><br><span class="line"></span><br><span class="line"><span class="comment">#取消之前加入的权限</span></span><br><span class="line">[root@localhost ~]<span class="comment"># setfacl -x u:code test      //取消/test对用户code的权限</span></span><br><span class="line">[root@localhost ~]<span class="comment"># setfacl -x m test           //恢复有效权限</span></span><br><span class="line">[root@localhost~]<span class="comment"># getfacl test               </span></span><br><span class="line"><span class="comment"># file: test</span></span><br><span class="line"><span class="comment"># owner: root</span></span><br><span class="line"><span class="comment"># group: root</span></span><br><span class="line">user::rwx</span><br><span class="line">group::rwx</span><br><span class="line">other::rwx</span><br><span class="line"></span><br><span class="line">[root@localhost ~]<span class="comment"># ll /test</span></span><br><span class="line">-rwxrwxrwx 1 root root 24 Apr 09 15:01 /<span class="built_in">test</span></span><br></pre></td></tr></table></figure></p>
-<h2 id="chattr"><a href="#chattr" class="headerlink" title="chattr"></a>chattr</h2><p>功能：改变文件属性。<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">8种文件属性</span><br><span class="line">a：让文件或目录仅供附加用途。</span><br><span class="line">b：不更新文件或目录的最后存取时间。</span><br><span class="line">c：将文件或目录压缩后存放。</span><br><span class="line">d：将文件或目录排除在倾倒操作之外。</span><br><span class="line">i：不得任意更动文件或目录。</span><br><span class="line">s：保密性删除文件或目录。</span><br><span class="line">S：即时更新文件或目录。</span><br><span class="line">u：预防意外删除。</span><br></pre></td></tr></table></figure></p>
-<p>语法：chattr [+|-|=&lt;属性&gt;][文件或目录…]</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">chattr +a a.txt           //只能追加</span><br><span class="line">chattr +i a.txt           //不能编辑</span><br><span class="line"></span><br><span class="line">chattr  -i a.txt</span><br><span class="line">chattr  -a a.txt</span><br></pre></td></tr></table></figure>
-<h2 id="lsattr"><a href="#lsattr" class="headerlink" title="lsattr"></a>lsattr</h2><p>功能：显示文件特殊属性</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[root@localhost ~]# lsattr a.txt</span><br><span class="line">-----a---------- a.txt</span><br></pre></td></tr></table></figure>
+<h1 id="RPM"><a href="#RPM" class="headerlink" title="RPM"></a>RPM</h1><ul>
+<li><p>挂载光盘<br>mount  /dev/cdrom /mnt/</p>
+</li>
+<li><p>查看包个数<br>ls /mnt/Packages/ | wc -l</p>
+</li>
+<li><p>安装包<br>rpm -ivh /mnt/Packages/zsh-4.3.10-4.1.el6.x86_64.rpm</p>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#参数说明：</span></span><br><span class="line">-i, --install                    install package(s)</span><br><span class="line">-v, --verbose                    provide more detailed output</span><br><span class="line">-h, --<span class="built_in">hash</span>                       <span class="built_in">print</span> <span class="built_in">hash</span> marks as package installs (good with -v)</span><br><span class="line"></span><br><span class="line"><span class="comment">#安装时需要注意依赖关系：</span></span><br><span class="line"></span><br><span class="line">找依赖库：</span><br><span class="line">1、从头开始查找</span><br><span class="line">2、过滤查找   *DB*</span><br><span class="line">3、上rpm包相关网站查找</span><br><span class="line">	rpmfind.net</span><br><span class="line">	rpm.pbone.net</span><br><span class="line">	www.rpmseek.com/index.html</span><br><span class="line">	</span><br><span class="line"><span class="comment">#强制安装：</span></span><br><span class="line">       --nodeps</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>rpm查询：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">rpm -qa zsh         <span class="comment">#查看是否安装成功</span></span><br><span class="line">rpm -ql zsh           <span class="comment">#查询安装后的文件和目录</span></span><br><span class="line">rpm -qf /bin/zsh      <span class="comment">#查询命令安装包是哪个</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#cat /etc/shells</span></span><br><span class="line">zsh  UNIX 系统下的一种shell，</span><br><span class="line"></span><br><span class="line">rpm -pql              <span class="comment">#提前查询安装包产生哪些文件和目录</span></span><br><span class="line">rpm -qpl              <span class="comment">#查看rpm包内容</span></span><br><span class="line">   rpm -Uvh              <span class="comment">#升级安装包</span></span><br><span class="line">   rpm -e                <span class="comment">#卸载</span></span><br><span class="line">   rpm -e --nodeps       <span class="comment">#强制卸载</span></span><br><span class="line">   rpm -qpi              <span class="comment">#查看一个包的作用</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>NOKEY</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#导入rpmPGP</span></span><br><span class="line">    cat /etc/yum.repos.d/rhel-source.repo</span><br><span class="line">    rpm --import etc/pki/rpm-gpg/RPM-GPG-KEY</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="YUM"><a href="#YUM" class="headerlink" title="YUM"></a>YUM</h1><ul>
+<li>配置yum源</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> /etc/yum.repos.d/</span><br><span class="line"><span class="comment">#用于区别各个不同的yun软件包库，必须有一个独一无二的名称</span></span><br><span class="line">[epel]</span><br><span class="line"><span class="comment">#对yum软件包库的描述</span></span><br><span class="line">name=Extra Packages <span class="keyword">for</span> Enterprise Linux 7 - <span class="variable">$basearch</span></span><br><span class="line"><span class="comment"># 1表示为可用</span></span><br><span class="line">enabled=1      </span><br><span class="line"><span class="comment">#                                                   </span></span><br><span class="line">failovermethod=priority</span><br><span class="line"><span class="comment">#安装软件所在目录</span></span><br><span class="line">baseurl=http://mirrors.cloud.aliyuncs.com/epel/7/<span class="variable">$basearch</span></span><br><span class="line"><span class="comment">#0：不使用公钥校验rpm正确性   1：使用公钥校验rpm正确性</span></span><br><span class="line">gpgcheck=0</span><br><span class="line"><span class="comment">#GPG校验公钥路径</span></span><br><span class="line">gpgkey=http://mirrors.cloud.aliyuncs.com/epel/RPM-GPG-KEY-EPEL-7</span><br></pre></td></tr></table></figure>
+<ul>
+<li>yum源安装<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">yum clear  all                          #清空本地缓存</span><br><span class="line">yum list      </span><br><span class="line">yum list | grep                         #过滤查找</span><br><span class="line">yum search                              #查找</span><br><span class="line">yum install -y                          #直接安装</span><br><span class="line">yum grouplist</span><br><span class="line">yum groupinstall &quot;Development tolls&quot;    #安装一组软件包</span><br><span class="line">yum remove                              #删除软件包</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="编译源码安装软件"><a href="#编译源码安装软件" class="headerlink" title="编译源码安装软件"></a>编译源码安装软件</h1><p>前提：系统必须安装开发工具、开发库</p>
+<ul>
+<li>安装步骤</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">1、获得源码包</span><br><span class="line">2、解压</span><br><span class="line">	tar -jxvf </span><br><span class="line">	</span><br><span class="line">3、配置，检测安装环境</span><br><span class="line">	./configure</span><br><span class="line">	./configure --prefix=/urs/<span class="built_in">local</span>/…              <span class="comment">#指定安装路径</span></span><br><span class="line">4、编译</span><br><span class="line">	make</span><br><span class="line">5、安装</span><br><span class="line">	make install</span><br></pre></td></tr></table></figure>
+<ul>
+<li>删除</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">make uninstall 指定路径的软件可以直接删除软件所在文件夹即可</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -451,7 +453,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://www.zhangq.info/2018/04/09/Linux/2018-04-09-Linux文件权限管理/" title="Linux-文件权限管理">http://www.zhangq.info/2018/04/09/Linux/2018-04-09-Linux文件权限管理/</a>
+    <a href="http://www.zhangq.info/2018/04/15/Linux/2018-04-15-Linux-软件包管理/" title="Linux-软件包管理">http://www.zhangq.info/2018/04/15/Linux/2018-04-15-Linux-软件包管理/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
@@ -466,7 +468,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/文件权限管理/" rel="tag"># 文件权限管理</a>
+            <a href="/tags/rpm/" rel="tag"># rpm</a>
+          
+            <a href="/tags/yum/" rel="tag"># yum</a>
           
         </div>
       
@@ -479,8 +483,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/04/08/Linux/2018-04-08-Linux-用户管理(二)/" rel="next" title="Linux-用户管理(二)">
-                <i class="fa fa-chevron-left"></i> Linux-用户管理(二)
+              <a href="/2018/04/12/Linux/2018-04-12-Linux文件归档/" rel="next" title="Linux-文件归档">
+                <i class="fa fa-chevron-left"></i> Linux-文件归档
               </a>
             
           </div>
@@ -488,10 +492,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/04/12/Linux/2018-04-12-Linux文件归档/" rel="prev" title="Linux-文件归档">
-                Linux-文件归档 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -623,7 +623,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#文件管理权限"><span class="nav-number">1.</span> <span class="nav-text">文件管理权限</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#特殊权限"><span class="nav-number">1.1.</span> <span class="nav-text">特殊权限</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SUID"><span class="nav-number">1.1.1.</span> <span class="nav-text">SUID</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SGID"><span class="nav-number">1.1.2.</span> <span class="nav-text">SGID</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Stickybit"><span class="nav-number">1.1.3.</span> <span class="nav-text">Stickybit</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#chmod"><span class="nav-number">1.2.</span> <span class="nav-text">chmod</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#文字设定"><span class="nav-number">1.2.1.</span> <span class="nav-text">文字设定</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数字设定"><span class="nav-number">1.2.2.</span> <span class="nav-text">数字设定</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#chown"><span class="nav-number">1.3.</span> <span class="nav-text">chown</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#umask"><span class="nav-number">1.4.</span> <span class="nav-text">umask</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#权限计算"><span class="nav-number">1.4.1.</span> <span class="nav-text">权限计算</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#getfacl"><span class="nav-number">1.5.</span> <span class="nav-text">getfacl</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#setfacl"><span class="nav-number">1.6.</span> <span class="nav-text">setfacl</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#chattr"><span class="nav-number">1.7.</span> <span class="nav-text">chattr</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#lsattr"><span class="nav-number">1.8.</span> <span class="nav-text">lsattr</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">Linux-软件包管理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#RPM"><span class="nav-number">2.</span> <span class="nav-text">RPM</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#YUM"><span class="nav-number">3.</span> <span class="nav-text">YUM</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#编译源码安装软件"><span class="nav-number">4.</span> <span class="nav-text">编译源码安装软件</span></a></li></ol></div>
             
 
           </div>
