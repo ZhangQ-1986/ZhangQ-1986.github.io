@@ -1,0 +1,1140 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="opestack,ontroller,mysql,RabbitMQ,Memcached,Etcd," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="SQL数据库大多数 OpenStack 服务使用 SQL 数据库来存储信息。 典型地，数据库运行在控制节点上。指南中的步骤依据不同的发行版使用MariaDB或 MySQL。OpenStack 服务也支持其他 SQL 数据库，包括PostgreSQL &amp;lt;http://www.postgresql.org/&amp;gt;。鉴于比较熟悉MySQL，本次实验使用Mariadb数据库。 安装数据库[root">
+<meta name="keywords" content="opestack,ontroller,mysql,RabbitMQ,Memcached,Etcd">
+<meta property="og:type" content="article">
+<meta property="og:title" content="openstack queens实战(二)-Controller节点基础环境搭建">
+<meta property="og:url" content="http://www.zhangq.info/2018/06/20/OpenStack/2018-06-20-openstack_queens实战(二)-Controller节点基础环境搭建/index.html">
+<meta property="og:site_name" content="ZhangQ">
+<meta property="og:description" content="SQL数据库大多数 OpenStack 服务使用 SQL 数据库来存储信息。 典型地，数据库运行在控制节点上。指南中的步骤依据不同的发行版使用MariaDB或 MySQL。OpenStack 服务也支持其他 SQL 数据库，包括PostgreSQL &amp;lt;http://www.postgresql.org/&amp;gt;。鉴于比较熟悉MySQL，本次实验使用Mariadb数据库。 安装数据库[root">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://www.zhangq.info/images/openstack/2018-06-20/1.png">
+<meta property="og:image" content="http://www.zhangq.info/images/openstack/2018-06-20/2.png">
+<meta property="og:updated_time" content="2018-09-29T14:33:32.583Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="openstack queens实战(二)-Controller节点基础环境搭建">
+<meta name="twitter:description" content="SQL数据库大多数 OpenStack 服务使用 SQL 数据库来存储信息。 典型地，数据库运行在控制节点上。指南中的步骤依据不同的发行版使用MariaDB或 MySQL。OpenStack 服务也支持其他 SQL 数据库，包括PostgreSQL &amp;lt;http://www.postgresql.org/&amp;gt;。鉴于比较熟悉MySQL，本次实验使用Mariadb数据库。 安装数据库[root">
+<meta name="twitter:image" content="http://www.zhangq.info/images/openstack/2018-06-20/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.zhangq.info/2018/06/20/OpenStack/2018-06-20-openstack_queens实战(二)-Controller节点基础环境搭建/"/>
+
+
+
+
+
+  <title>openstack queens实战(二)-Controller节点基础环境搭建 | ZhangQ</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">ZhangQ</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.zhangq.info/2018/06/20/OpenStack/2018-06-20-openstack_queens实战(二)-Controller节点基础环境搭建/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ZhangQ">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ZhangQ">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">openstack queens实战(二)-Controller节点基础环境搭建</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-20T00:00:00+08:00">
+                2018-06-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/openstack/" itemprop="url" rel="index">
+                    <span itemprop="name">openstack</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="SQL数据库"><a href="#SQL数据库" class="headerlink" title="SQL数据库"></a>SQL数据库</h1><p>大多数 OpenStack 服务使用 SQL 数据库来存储信息。 典型地，数据库运行在控制节点上。指南中的步骤依据不同的发行版使用MariaDB或 MySQL。OpenStack 服务也支持其他 SQL 数据库，包括<code>PostgreSQL &lt;http://www.postgresql.org/&gt;</code>。鉴于比较熟悉MySQL，本次实验使用Mariadb数据库。</p>
+<h2 id="安装数据库"><a href="#安装数据库" class="headerlink" title="安装数据库"></a>安装数据库</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># yum install mariadb mariadb-server MySQL-python</span></span><br></pre></td></tr></table></figure>
+<h2 id="配置数据库"><a href="#配置数据库" class="headerlink" title="配置数据库"></a>配置数据库</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># vim /etc/my.cnf.d/mariadb-server.cnf </span></span><br><span class="line"></span><br><span class="line"><span class="comment">#在 [mysqld] 部分，设置 ``bind-address``值为控制节点的管理网络IP地址以使得其它节点可以通过管理网络访问数据库：</span></span><br><span class="line">[mysqld]</span><br><span class="line"><span class="built_in">bind</span>-address = 10.10.10.10</span><br><span class="line"></span><br><span class="line"><span class="comment">#在``[mysqld]`` 部分，设置如下键值来启用一起有用的选项和 UTF-8 字符集</span></span><br><span class="line"></span><br><span class="line">[mysqld]</span><br><span class="line"></span><br><span class="line">default-storage-engine = innodb</span><br><span class="line">innodb_file_per_table = on</span><br><span class="line">max_connections = 4096</span><br><span class="line">collation-server = utf8_general_ci</span><br><span class="line">character-set-server = utf8</span><br></pre></td></tr></table></figure>
+<h2 id="设置开机启动和启动服务"><a href="#设置开机启动和启动服务" class="headerlink" title="设置开机启动和启动服务"></a>设置开机启动和启动服务</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[root@localhost ~]# systemctl enable mariadb.service</span><br><span class="line">Created symlink from /etc/systemd/system/multi-user.target.wants/mariadb.service to /usr/lib/systemd/system/mariadb.service.</span><br><span class="line">[root@localhost ~]# systemctl start mariadb.service</span><br><span class="line">[root@localhost ~]# systemctl status mariadb</span><br><span class="line">● mariadb.service - MariaDB 10.1 database server</span><br><span class="line">   Loaded: loaded (/usr/lib/systemd/system/mariadb.service; enabled; vendor preset: disabled)</span><br><span class="line">   Active: active (running) since Tue 2018-09-11 10:34:16 EDT; 15s ago</span><br><span class="line">  Process: 49412 ExecStartPost=/usr/libexec/mysql-check-upgrade (code=exited, status=0/SUCCESS)</span><br><span class="line">  Process: 48970 ExecStartPre=/usr/libexec/mysql-prepare-db-dir %n (code=exited, status=0/SUCCESS)</span><br><span class="line">  Process: 48947 ExecStartPre=/usr/libexec/mysql-check-socket (code=exited, status=0/SUCCESS)</span><br><span class="line"> Main PID: 49384 (mysqld)</span><br><span class="line">   Status: &quot;Taking your SQL requests now...&quot;</span><br><span class="line">   CGroup: /system.slice/mariadb.service</span><br><span class="line">           └─49384 /usr/libexec/mysqld --basedir=/usr</span><br><span class="line"></span><br><span class="line">Sep 11 10:34:16 localhost.localdomain mysql-prepare-db-dir[48970]: See the MariaDB Knowledgebase at http://mariadb.com/kb or the</span><br><span class="line">Sep 11 10:34:16 localhost.localdomain mysql-prepare-db-dir[48970]: MySQL manual for more instructions.</span><br><span class="line">Sep 11 10:34:16 localhost.localdomain mysql-prepare-db-dir[48970]: Please report any problems at http://mariadb.org/jira</span><br><span class="line">Sep 11 10:34:16 localhost.localdomain mysql-prepare-db-dir[48970]: The latest information about MariaDB is available at http://mariadb.org/.</span><br><span class="line">Sep 11 10:34:16 localhost.localdomain mysql-prepare-db-dir[48970]: You can find additional information about the MySQL part at:</span><br><span class="line">Sep 11 10:34:16 localhost.localdomain mysql-prepare-db-dir[48970]: http://dev.mysql.com</span><br><span class="line">Sep 11 10:34:16 localhost.localdomain mysql-prepare-db-dir[48970]: Consider joining MariaDB&apos;s strong and vibrant community:</span><br><span class="line">Sep 11 10:34:16 localhost.localdomain mysql-prepare-db-dir[48970]: https://mariadb.org/get-involved/</span><br><span class="line">Sep 11 10:34:16 localhost.localdomain mysqld[49384]: 2018-09-11 10:34:16 140412884986048 [Note] /usr/libexec/mysqld (mysqld 10.1.20-MariaDB) starting as pr...49384 ...</span><br><span class="line">Sep 11 10:34:16 localhost.localdomain systemd[1]: Started MariaDB 10.1 database server.</span><br><span class="line">Hint: Some lines were ellipsized, use -l to show in full.</span><br></pre></td></tr></table></figure>
+<h2 id="初始化数据库"><a href="#初始化数据库" class="headerlink" title="初始化数据库"></a>初始化数据库</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># mysql_secure_installation</span></span><br><span class="line"></span><br><span class="line">NOTE: RUNNING ALL PARTS OF THIS SCRIPT IS RECOMMENDED FOR ALL MariaDB</span><br><span class="line">      SERVERS IN PRODUCTION USE!  PLEASE READ EACH STEP CAREFULLY!</span><br><span class="line"></span><br><span class="line">In order to <span class="built_in">log</span> into MariaDB to secure it, we<span class="string">'ll need the current</span></span><br><span class="line"><span class="string">password for the root user.  If you'</span>ve just installed MariaDB, and</span><br><span class="line">you haven<span class="string">'t set the root password yet, the password will be blank,</span></span><br><span class="line"><span class="string">so you should just press enter here.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Enter current password for root (enter for none): </span></span><br><span class="line"><span class="string">OK, successfully used password, moving on...</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Setting the root password ensures that nobody can log into the MariaDB</span></span><br><span class="line"><span class="string">root user without the proper authorisation.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Set root password? [Y/n] y</span></span><br><span class="line"><span class="string">New password: </span></span><br><span class="line"><span class="string">Re-enter new password: </span></span><br><span class="line"><span class="string">Password updated successfully!</span></span><br><span class="line"><span class="string">Reloading privilege tables..</span></span><br><span class="line"><span class="string"> ... Success!</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">By default, a MariaDB installation has an anonymous user, allowing anyone</span></span><br><span class="line"><span class="string">to log into MariaDB without having to have a user account created for</span></span><br><span class="line"><span class="string">them.  This is intended only for testing, and to make the installation</span></span><br><span class="line"><span class="string">go a bit smoother.  You should remove them before moving into a</span></span><br><span class="line"><span class="string">production environment.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Remove anonymous users? [Y/n] n</span></span><br><span class="line"><span class="string"> ... skipping.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Normally, root should only be allowed to connect from '</span>localhost<span class="string">'.  This</span></span><br><span class="line"><span class="string">ensures that someone cannot guess at the root password from the network.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Disallow root login remotely? [Y/n] n</span></span><br><span class="line"><span class="string"> ... skipping.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">By default, MariaDB comes with a database named '</span><span class="built_in">test</span><span class="string">' that anyone can</span></span><br><span class="line"><span class="string">access.  This is also intended only for testing, and should be removed</span></span><br><span class="line"><span class="string">before moving into a production environment.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Remove test database and access to it? [Y/n] n</span></span><br><span class="line"><span class="string"> ... skipping.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Reloading the privilege tables will ensure that all changes made so far</span></span><br><span class="line"><span class="string">will take effect immediately.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Reload privilege tables now? [Y/n] y</span></span><br><span class="line"><span class="string"> ... Success!</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Cleaning up...</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">All done!  If you'</span>ve completed all of the above steps, your MariaDB</span><br><span class="line">installation should now be secure.</span><br><span class="line"></span><br><span class="line">Thanks <span class="keyword">for</span> using MariaDB!</span><br></pre></td></tr></table></figure>
+<h1 id="RabbitMQ消息队列"><a href="#RabbitMQ消息队列" class="headerlink" title="RabbitMQ消息队列"></a>RabbitMQ消息队列</h1><p>OpenStack 使用 message queue 协调操作和各服务的状态信息。消息队列服务一般运行在控制节点上。OpenStack支持好几种消息队列服务包括 RabbitMQ, Qpid, 和 ZeroMQ。不过，大多数发行版本的OpenStack包支持特定的消息队列服务。本实验安装 RabbitMQ 消息队列服务，因为大部分发行版本都支持它。</p>
+<h2 id="RabbitMQ安装"><a href="#RabbitMQ安装" class="headerlink" title="RabbitMQ安装"></a>RabbitMQ安装</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">yum install rabbitmq-server -y</span><br></pre></td></tr></table></figure>
+<h2 id="设置开机自启和启动服务"><a href="#设置开机自启和启动服务" class="headerlink" title="设置开机自启和启动服务"></a>设置开机自启和启动服务</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#systemctl enable rabbitmq-server.service</span></span><br><span class="line"><span class="comment">#systemctl start rabbitmq-server.service</span></span><br><span class="line"></span><br><span class="line">[root@controller ~]<span class="comment"># systemctl enable rabbitmq-server.service</span></span><br><span class="line">Created symlink from /etc/systemd/system/multi-user.target.wants/rabbitmq-server.service to /usr/lib/systemd/system/rabbitmq-server.service.</span><br><span class="line">[root@localhost ~]<span class="comment"># systemctl start rabbitmq-server.service</span></span><br><span class="line">[root@localhost ~]<span class="comment"># systemctl status rabbitmq-server.service</span></span><br><span class="line">● rabbitmq-server.service - RabbitMQ broker</span><br><span class="line">   Loaded: loaded (/usr/lib/systemd/system/rabbitmq-server.service; enabled; vendor preset: disabled)</span><br><span class="line">   Active: active (running) since Fri 2018-09-14 09:02:30 EDT; 11s ago</span><br><span class="line"> Main PID: 5248 (beam.smp)</span><br><span class="line">   Status: <span class="string">"Initialized"</span></span><br><span class="line">   CGroup: /system.slice/rabbitmq-server.service</span><br><span class="line">           ├─5248 /usr/lib64/erlang/erts-8.3.5.3/bin/beam.smp -W w -A 64 -P 1048576 -t 5000000 -stbt db -K <span class="literal">true</span> -- -root /usr/lib64/erlang -progname erl -- -home /v...</span><br><span class="line">           ├─5470 erl_child_setup 1024</span><br><span class="line">           ├─5496 inet_gethost 4</span><br><span class="line">           └─5497 inet_gethost 4</span><br><span class="line"></span><br><span class="line">Sep 14 09:02:27 localhost.localdomain systemd[1]: Starting RabbitMQ broker...</span><br><span class="line">Sep 14 09:02:29 localhost.localdomain rabbitmq-server[5248]: RabbitMQ 3.6.5. Copyright (C) 2007-2016 Pivotal Software, Inc.</span><br><span class="line">Sep 14 09:02:29 localhost.localdomain rabbitmq-server[5248]: <span class="comment">##  ##      Licensed under the MPL.  See http://www.rabbitmq.com/</span></span><br><span class="line">Sep 14 09:02:29 localhost.localdomain rabbitmq-server[5248]: <span class="comment">##  ##</span></span><br><span class="line">Sep 14 09:02:29 localhost.localdomain rabbitmq-server[5248]: <span class="comment">##########  Logs: /var/log/rabbitmq/rabbit@localhost.log</span></span><br><span class="line">Sep 14 09:02:29 localhost.localdomain rabbitmq-server[5248]: <span class="comment">######  ##        /var/log/rabbitmq/rabbit@localhost-sasl.log</span></span><br><span class="line">Sep 14 09:02:29 localhost.localdomain rabbitmq-server[5248]: <span class="comment">##########</span></span><br><span class="line">Sep 14 09:02:29 localhost.localdomain rabbitmq-server[5248]: Starting broker...</span><br><span class="line">Sep 14 09:02:30 localhost.localdomain systemd[1]: Started RabbitMQ broker.</span><br><span class="line">Sep 14 09:02:30 localhost.localdomain rabbitmq-server[5248]: completed with 0 plugins.</span><br></pre></td></tr></table></figure>
+<h2 id="添加openstack-用户"><a href="#添加openstack-用户" class="headerlink" title="添加openstack 用户"></a>添加openstack 用户</h2><p>rabbitmqctl add_user openstack openstack<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[root@controller ~]<span class="comment"># rabbitmqctl add_user openstack 123456</span></span><br><span class="line">Creating user <span class="string">"openstack"</span> ...</span><br></pre></td></tr></table></figure></p>
+<h2 id="openstack用户的权限配置"><a href="#openstack用户的权限配置" class="headerlink" title="openstack用户的权限配置"></a>openstack用户的权限配置</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#rabbitmqctl set_user_tags openstack administrator</span></span><br><span class="line"><span class="comment">#rabbitmqctl set_permissions openstack ".*" ".*" ".*"</span></span><br><span class="line"></span><br><span class="line">[root@controller etc]<span class="comment"># rabbitmqctl set_user_tags openstack administrator</span></span><br><span class="line">Setting tags <span class="keyword">for</span> user <span class="string">"openstack"</span> to [administrator] ...</span><br><span class="line"></span><br><span class="line">[root@controller ~]<span class="comment"># rabbitmqctl set_permissions openstack ".*" ".*" ".*"</span></span><br><span class="line">Setting permissions <span class="keyword">for</span> user <span class="string">"openstack"</span> <span class="keyword">in</span> vhost <span class="string">"/"</span> ...</span><br></pre></td></tr></table></figure>
+<h2 id="web界面登陆测试"><a href="#web界面登陆测试" class="headerlink" title="web界面登陆测试"></a>web界面登陆测试</h2><p>运行管理平台 <a href="http://10.10.10.10:15672" target="_blank" rel="noopener">http://10.10.10.10:15672</a> 使用openstack/123456登陆即可。</p>
+<p><strong>如果IP地址加载失败，优先考虑是否运行管理平台</strong><br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[root@controller etc]<span class="comment"># rabbitmq-plugins enable rabbitmq_management</span></span><br><span class="line">The following plugins have been enabled:</span><br><span class="line">  mochiweb</span><br><span class="line">  webmachine</span><br><span class="line">  rabbitmq_web_dispatch</span><br><span class="line">  amqp_client</span><br><span class="line">  rabbitmq_management_agent</span><br><span class="line">  rabbitmq_management</span><br></pre></td></tr></table></figure></p>
+<p><img src="/images/openstack/2018-06-20/1.png" alt="RabbitMQ"><br><img src="/images/openstack/2018-06-20/2.png" alt="RabbitMQ"></p>
+<h1 id="Memcached缓存数据库"><a href="#Memcached缓存数据库" class="headerlink" title="Memcached缓存数据库"></a>Memcached缓存数据库</h1><p>服务的身份认证服务使用Memcached缓存令牌。 memcached服务通常在控制器节点上运行。 对于生产部署，建议启用防火墙，身份验证和加密的组合来保护它。</p>
+<h2 id="安装Memcached"><a href="#安装Memcached" class="headerlink" title="安装Memcached"></a>安装Memcached</h2><p><code>yum install memcached python-memcached -y</code></p>
+<h2 id="配置Memcached"><a href="#配置Memcached" class="headerlink" title="配置Memcached"></a>配置Memcached</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vi /etc/sysconfig/memcached</span><br><span class="line">OPTIONS=<span class="string">"-l 127.0.0.1,::1,controller"</span></span><br></pre></td></tr></table></figure>
+<h2 id="设置开机自启和服务启动"><a href="#设置开机自启和服务启动" class="headerlink" title="设置开机自启和服务启动"></a>设置开机自启和服务启动</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">systemctl <span class="built_in">enable</span> memcached.service</span><br><span class="line">systemctl start memcached.service</span><br></pre></td></tr></table></figure>
+<p><strong>启动失败</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">配置文件错误，将 OPTIONS=&quot;-l 10.10.10.10,::1,controller&quot; 修改为OPTIONS=&quot;-l 127.0.0.1,::1,controller&quot;</span><br></pre></td></tr></table></figure>
+<h2 id="验证Memcached服务"><a href="#验证Memcached服务" class="headerlink" title="验证Memcached服务"></a>验证Memcached服务</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[root@controller ~]<span class="comment"># netstat -anltp|grep memcache</span></span><br><span class="line">tcp 0 0 172.16.14.224:11211 0.0.0.0: LISTEN 14940/memcached </span><br><span class="line">tcp 0 0 127.0.0.1:11211 0.0.0.0: LISTEN 14940/memcached </span><br><span class="line">tcp6 0 0 ::1:11211 :::* LISTEN 14940/memcached</span><br></pre></td></tr></table></figure>
+<h1 id="Etcd服务"><a href="#Etcd服务" class="headerlink" title="Etcd服务"></a>Etcd服务</h1><h2 id="Etcd服务安装"><a href="#Etcd服务安装" class="headerlink" title="Etcd服务安装"></a>Etcd服务安装</h2><p><code>yum install etcd -y</code></p>
+<h2 id="Etcd配置"><a href="#Etcd配置" class="headerlink" title="Etcd配置"></a>Etcd配置</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vim /etc/etcd/etcd.conf</span><br><span class="line"><span class="comment">#[Member]</span></span><br><span class="line">ETCD_DATA_DIR=<span class="string">"/var/lib/etcd/default.etcd"</span></span><br><span class="line">ETCD_LISTEN_PEER_URLS=<span class="string">"http://110.10.10.10:2380"</span></span><br><span class="line">ETCD_LISTEN_CLIENT_URLS=<span class="string">"http://10.10.10.10.224:2379"</span></span><br><span class="line">ETCD_NAME=<span class="string">"controller"</span></span><br><span class="line"><span class="comment">#[Clustering]</span></span><br><span class="line">ETCD_INITIAL_ADVERTISE_PEER_URLS=<span class="string">"http://10.10.10.10:2380"</span></span><br><span class="line">ETCD_ADVERTISE_CLIENT_URLS=<span class="string">"http://10.10.10.10:2379"</span></span><br><span class="line">ETCD_INITIAL_CLUSTER=<span class="string">"controller=http://10.10.10.10:2380"</span></span><br><span class="line">ETCD_INITIAL_CLUSTER_TOKEN=<span class="string">"etcd-cluster-01"</span></span><br><span class="line">ETCD_INITIAL_CLUSTER_STATE=<span class="string">"new"</span></span><br></pre></td></tr></table></figure>
+<h2 id="开机自启和服务启动"><a href="#开机自启和服务启动" class="headerlink" title="开机自启和服务启动"></a>开机自启和服务启动</h2><p>systemctl enable etcd<br>systemctl start etcd<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[root@controller ~]<span class="comment"># vim /etc/etcd/etcd.conf </span></span><br><span class="line">[root@controller ~]<span class="comment"># systemctl enable etcd</span></span><br><span class="line">Created symlink from /etc/systemd/system/multi-user.target.wants/etcd.service to /usr/lib/systemd/system/etcd.service.</span><br><span class="line">[root@controller ~]<span class="comment"># systemctl start etcd</span></span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    ZhangQ
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://www.zhangq.info/2018/06/20/OpenStack/2018-06-20-openstack_queens实战(二)-Controller节点基础环境搭建/" title="openstack queens实战(二)-Controller节点基础环境搭建">http://www.zhangq.info/2018/06/20/OpenStack/2018-06-20-openstack_queens实战(二)-Controller节点基础环境搭建/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/opestack/" rel="tag"># opestack</a>
+          
+            <a href="/tags/ontroller/" rel="tag"># ontroller</a>
+          
+            <a href="/tags/mysql/" rel="tag"># mysql</a>
+          
+            <a href="/tags/RabbitMQ/" rel="tag"># RabbitMQ</a>
+          
+            <a href="/tags/Memcached/" rel="tag"># Memcached</a>
+          
+            <a href="/tags/Etcd/" rel="tag"># Etcd</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/06/15/OpenStack/2018-06-15-openstack_queens实战(一)-准备工作/" rel="next" title="openstack queens实战(一)-准备工作">
+                <i class="fa fa-chevron-left"></i> openstack queens实战(一)-准备工作
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/06/21/OpenStack/2018-06-21-openstack_queens实战(三)-keystone部署/" rel="prev" title="openstack queens实战(三)-keystone部署">
+                openstack queens实战(三)-keystone部署 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">ZhangQ</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">33</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#SQL数据库"><span class="nav-number">1.</span> <span class="nav-text">SQL数据库</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装数据库"><span class="nav-number">1.1.</span> <span class="nav-text">安装数据库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置数据库"><span class="nav-number">1.2.</span> <span class="nav-text">配置数据库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设置开机启动和启动服务"><span class="nav-number">1.3.</span> <span class="nav-text">设置开机启动和启动服务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#初始化数据库"><span class="nav-number">1.4.</span> <span class="nav-text">初始化数据库</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#RabbitMQ消息队列"><span class="nav-number">2.</span> <span class="nav-text">RabbitMQ消息队列</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#RabbitMQ安装"><span class="nav-number">2.1.</span> <span class="nav-text">RabbitMQ安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设置开机自启和启动服务"><span class="nav-number">2.2.</span> <span class="nav-text">设置开机自启和启动服务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#添加openstack-用户"><span class="nav-number">2.3.</span> <span class="nav-text">添加openstack 用户</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#openstack用户的权限配置"><span class="nav-number">2.4.</span> <span class="nav-text">openstack用户的权限配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#web界面登陆测试"><span class="nav-number">2.5.</span> <span class="nav-text">web界面登陆测试</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Memcached缓存数据库"><span class="nav-number">3.</span> <span class="nav-text">Memcached缓存数据库</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装Memcached"><span class="nav-number">3.1.</span> <span class="nav-text">安装Memcached</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置Memcached"><span class="nav-number">3.2.</span> <span class="nav-text">配置Memcached</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设置开机自启和服务启动"><span class="nav-number">3.3.</span> <span class="nav-text">设置开机自启和服务启动</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#验证Memcached服务"><span class="nav-number">3.4.</span> <span class="nav-text">验证Memcached服务</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Etcd服务"><span class="nav-number">4.</span> <span class="nav-text">Etcd服务</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Etcd服务安装"><span class="nav-number">4.1.</span> <span class="nav-text">Etcd服务安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Etcd配置"><span class="nav-number">4.2.</span> <span class="nav-text">Etcd配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#开机自启和服务启动"><span class="nav-number">4.3.</span> <span class="nav-text">开机自启和服务启动</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ZhangQ</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

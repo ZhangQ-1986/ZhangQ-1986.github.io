@@ -79,20 +79,20 @@
 
 
 
-<meta name="description" content="Linux-用户管理(二)  useradduseradd命令用于Linux中创建的新的系统用户。useradd可用来建立用户帐号。帐号建好之后，再用passwd设定帐号的密码．而可用userdel删除帐号。使用useradd指令所建立的帐号，实际上是保存在/etc/passwd文本文件中。 格式：useradd(选项)(参数)useradd [-d home] [-s shell] [-c co">
+<meta name="description" content="useradduseradd命令用于Linux中创建的新的系统用户。useradd可用来建立用户帐号。帐号建好之后，再用passwd设定帐号的密码．而可用userdel删除帐号。使用useradd指令所建立的帐号，实际上是保存在/etc/passwd文本文件中。 格式：useradd(选项)(参数)useradd [-d home] [-s shell] [-c comment] [-m [-k">
 <meta name="keywords" content="用户管理">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Linux-用户管理(二)">
 <meta property="og:url" content="http://www.zhangq.info/2018/04/08/Linux/2018-04-08-Linux-用户管理(二)/index.html">
 <meta property="og:site_name" content="ZhangQ">
-<meta property="og:description" content="Linux-用户管理(二)  useradduseradd命令用于Linux中创建的新的系统用户。useradd可用来建立用户帐号。帐号建好之后，再用passwd设定帐号的密码．而可用userdel删除帐号。使用useradd指令所建立的帐号，实际上是保存在/etc/passwd文本文件中。 格式：useradd(选项)(参数)useradd [-d home] [-s shell] [-c co">
+<meta property="og:description" content="useradduseradd命令用于Linux中创建的新的系统用户。useradd可用来建立用户帐号。帐号建好之后，再用passwd设定帐号的密码．而可用userdel删除帐号。使用useradd指令所建立的帐号，实际上是保存在/etc/passwd文本文件中。 格式：useradd(选项)(参数)useradd [-d home] [-s shell] [-c comment] [-m [-k">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://www.zhangq.info/images/Linux/2018-04-08-01.png">
 <meta property="og:image" content="http://www.zhangq.info/images/Linux/2018-04-08-02.png">
-<meta property="og:updated_time" content="2018-09-03T08:00:07.515Z">
+<meta property="og:updated_time" content="2018-09-11T07:51:14.955Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux-用户管理(二)">
-<meta name="twitter:description" content="Linux-用户管理(二)  useradduseradd命令用于Linux中创建的新的系统用户。useradd可用来建立用户帐号。帐号建好之后，再用passwd设定帐号的密码．而可用userdel删除帐号。使用useradd指令所建立的帐号，实际上是保存在/etc/passwd文本文件中。 格式：useradd(选项)(参数)useradd [-d home] [-s shell] [-c co">
+<meta name="twitter:description" content="useradduseradd命令用于Linux中创建的新的系统用户。useradd可用来建立用户帐号。帐号建好之后，再用passwd设定帐号的密码．而可用userdel删除帐号。使用useradd指令所建立的帐号，实际上是保存在/etc/passwd文本文件中。 格式：useradd(选项)(参数)useradd [-d home] [-s shell] [-c comment] [-m [-k">
 <meta name="twitter:image" content="http://www.zhangq.info/images/Linux/2018-04-08-01.png">
 
 
@@ -103,7 +103,7 @@
     root: '/',
     scheme: 'Mist',
     version: '5.1.4',
-    sidebar: {"position":"left","display":"hide","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
     fancybox: true,
     tabs: true,
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
@@ -389,9 +389,7 @@
       
 
       
-        <center><h1>Linux-用户管理(二)</h1></center>
-
-<h1 id="useradd"><a href="#useradd" class="headerlink" title="useradd"></a>useradd</h1><p>useradd命令用于Linux中创建的新的系统用户。useradd可用来建立用户帐号。帐号建好之后，再用passwd设定帐号的密码．而可用userdel删除帐号。使用useradd指令所建立的帐号，实际上是保存在/etc/passwd文本文件中。</p>
+        <h1 id="useradd"><a href="#useradd" class="headerlink" title="useradd"></a>useradd</h1><p>useradd命令用于Linux中创建的新的系统用户。useradd可用来建立用户帐号。帐号建好之后，再用passwd设定帐号的密码．而可用userdel删除帐号。使用useradd指令所建立的帐号，实际上是保存在/etc/passwd文本文件中。</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">格式：useradd(选项)(参数)</span><br><span class="line">useradd [-d home] [-s shell] [-c comment] [-m [-k template]] [-f inactive] [-e expire ] [-p passwd] [-r] name</span><br><span class="line"></span><br><span class="line">选项：</span><br><span class="line">-c：加上备注文字，备注文字保存在passwd的备注栏中。</span><br><span class="line">-d：指定用户登入时的主目录，替换系统默认值/home/&lt;用户名&gt;</span><br><span class="line">-D：变更预设值。</span><br><span class="line">-e：指定账号的失效日期，日期格式为MM/DD/YY，例如06/30/12。缺省表示永久有效。</span><br><span class="line">-f：指定在密码过期后多少天即关闭该账号。如果为0账号立即被停用；如果为-1则账号一直可用。默认值为-1.</span><br><span class="line">-g：指定用户所属的群组。值可以使组名也可以是GID。用户组必须已经存在的，期默认值为100，即users。</span><br><span class="line">-G：指定用户所属的附加群组。</span><br><span class="line">-m：自动建立用户的登入目录。</span><br><span class="line">-M：不要自动建立用户的登入目录。</span><br><span class="line">-n：取消建立以用户名称为名的群组。</span><br><span class="line">-r：建立系统账号。</span><br><span class="line">-s：指定用户登入后所使用的shell。默认值为/bin/bash。</span><br><span class="line">-u：指定用户ID号。该值在系统中必须是唯一的。0~499默认是保留给系统用户账号使用的，所以该值必须大于499。</span><br></pre></td></tr></table></figure>
 <p>实例：<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[root@izuf6fmbh00axmyjllc0x0z ~]<span class="comment"># useradd -u 5003 shen</span></span><br><span class="line">[root@izuf6fmbh00axmyjllc0x0z ~]<span class="comment"># id shen</span></span><br><span class="line">uid=5003(shen) gid=5003(shen) groups=5003(shen)</span><br></pre></td></tr></table></figure></p>
 <h1 id="passwd"><a href="#passwd" class="headerlink" title="passwd"></a>passwd</h1><p>passwd命令用于设置用户的认证信息，包括用户密码、密码过期时间等。系统管理者则能用它管理系统用户的密码。只有管理者可以指定用户名称，一般用户只能变更自己的密码。</p>
@@ -464,7 +462,7 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/04/09/Linux/2018-04-09-Linux文件权限管理/" rel="prev" title="Linux-文件权限管理">
+              <a href="/2018/04/09/Linux/2018-04-09-Linux-文件权限管理/" rel="prev" title="Linux-文件权限管理">
                 Linux-文件权限管理 <i class="fa fa-chevron-right"></i>
               </a>
             
@@ -543,7 +541,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-count">21</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -554,7 +552,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -565,7 +563,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-count">33</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -598,7 +596,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">Linux-用户管理(二)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#useradd"><span class="nav-number">2.</span> <span class="nav-text">useradd</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#passwd"><span class="nav-number">3.</span> <span class="nav-text">passwd</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#userdel"><span class="nav-number">4.</span> <span class="nav-text">userdel</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#groupadd"><span class="nav-number">5.</span> <span class="nav-text">groupadd</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#groupmod"><span class="nav-number">6.</span> <span class="nav-text">groupmod</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#chgrp"><span class="nav-number">7.</span> <span class="nav-text">chgrp</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#用户模版恢复"><span class="nav-number">8.</span> <span class="nav-text">用户模版恢复</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#useradd"><span class="nav-number">1.</span> <span class="nav-text">useradd</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#passwd"><span class="nav-number">2.</span> <span class="nav-text">passwd</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#userdel"><span class="nav-number">3.</span> <span class="nav-text">userdel</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#groupadd"><span class="nav-number">4.</span> <span class="nav-text">groupadd</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#groupmod"><span class="nav-number">5.</span> <span class="nav-text">groupmod</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#chgrp"><span class="nav-number">6.</span> <span class="nav-text">chgrp</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#用户模版恢复"><span class="nav-number">7.</span> <span class="nav-text">用户模版恢复</span></a></li></ol></div>
             
 
           </div>
